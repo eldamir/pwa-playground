@@ -28,7 +28,7 @@
     <div>
         <span></span>
         <button onclick="@(() => InputNumber(0))">0</button>
-        <button>,</button>
+        <button onclick="@(() => CommaBeforeNext())">,</button>
         <button onclick="@(() => Evaluate())">=</button>
     </div>
 </div>
@@ -37,6 +37,7 @@
     string _displayValue = "0";
     double _currentValue = 0;
     double _stored = 0;
+    bool _commaBeforeNext = false;
     
     CalculatorOperator _op = CalculatorOperator.None;
 
@@ -48,7 +49,15 @@
 
     private void InputNumber(int number)
     {
-        _currentValue = _currentValue * 10 + number;
+        if (_commaBeforeNext)
+        {
+            _currentValue += (double)number / 10;
+            _commaBeforeNext = false;
+        }
+        else
+        {
+            _currentValue = _currentValue * 10 + number;
+        }
         UpdateDisplay();
     }
 
@@ -139,6 +148,11 @@
     {
         _currentValue /= 100;
         UpdateDisplay();
+    }
+
+    private void CommaBeforeNext()
+    {
+        _commaBeforeNext = true;
     }
 
 }
