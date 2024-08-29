@@ -1,6 +1,9 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+body {
+    touch-action: manipulation;
+}
 
 h1:focus {
     outline: none;
