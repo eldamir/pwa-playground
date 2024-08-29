@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PwaPlayground", "PwaPlayground\PwaPlayground.csproj", "{DDA0B197-166D-4E42-8DFA-54AFC4B03B15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDA0B197-166D-4E42-8DFA-54AFC4B03B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA0B197-166D-4E42-8DFA-54AFC4B03B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA0B197-166D-4E42-8DFA-54AFC4B03B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA0B197-166D-4E42-8DFA-54AFC4B03B15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
