@@ -85,19 +85,11 @@
 
     private void Clear()
     {
+        _commaBeforeNext = false;
         _currentValue = 0;
         _stored = 0;
         _op = CalculatorOperator.None;
         UpdateDisplay();
-    }
-    
-    enum CalculatorOperator
-    {
-        None,
-        Add,
-        Subtract,
-        Multiply,
-        Divide
     }
 
     private void ChangeOperator(CalculatorOperator newOperator)
@@ -107,6 +99,7 @@
         {
             Evaluate();
         }
+        _commaBeforeNext = false;
         _op = newOperator;
         _stored = _currentValue;
         _currentValue = 0;
@@ -133,6 +126,7 @@
                 break;
         }
 
+        _commaBeforeNext = false;
         _stored = 0;
         _op = CalculatorOperator.None;
         UpdateDisplay();
@@ -140,12 +134,14 @@
 
     private void SwapSign()
     {
+        _commaBeforeNext = false;
         _currentValue *= -1;
         UpdateDisplay();
     }
 
     private void InPercent()
     {
+        _commaBeforeNext = false;
         _currentValue /= 100;
         UpdateDisplay();
     }
@@ -153,6 +149,15 @@
     private void CommaBeforeNext()
     {
         _commaBeforeNext = true;
+    }
+
+    enum CalculatorOperator
+    {
+        None,
+        Add,
+        Subtract,
+        Multiply,
+        Divide
     }
 
 }
