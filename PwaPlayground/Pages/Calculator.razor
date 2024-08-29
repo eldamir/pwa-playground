@@ -1,0 +1,147 @@
+﻿@page "/Calculator"
+@using System.Globalization
+<h3>Calculator</h3>
+
+<div class="calculator">
+    <input type="text" class="calculator-screen" value="@_displayValue" disabled />
+    <div>
+        <button onclick="@(() => Clear())">AC</button>
+        <button onclick="@(() => SwapSign())">+/-</button>
+        <button onclick="@(() => InPercent())">%</button>
+        <button onclick="@(() => ChangeOperator(CalculatorOperator.Divide))">/</button>
+    </div>
+    <div>
+        <button onclick="@(() => InputNumber(7))">7</button>
+        <button onclick="@(() => InputNumber(8))">8</button>
+        <button onclick="@(() => InputNumber(9))">9</button>
+        <button onclick="@(() => ChangeOperator(CalculatorOperator.Multiply))">*</button>
+    </div>
+    <div>
+        <button onclick="@(() => InputNumber(4))">4</button>
+        <button onclick="@(() => InputNumber(5))">5</button>
+        <button onclick="@(() => InputNumber(6))">6</button>
+        <button onclick="@(() => ChangeOperator(CalculatorOperator.Subtract))">-</button>
+    </div>
+    <div>
+        <button onclick="@(() => InputNumber(1))">1</button>
+        <button onclick="@(() => InputNumber(2))">2</button>
+        <button onclick="@(() => InputNumber(3))">3</button>
+        <button onclick="@(() => ChangeOperator(CalculatorOperator.Add))">+</button>
+    </div>
+    <div>
+        <span></span>
+        <button onclick="@(() => InputNumber(0))">0</button>
+        <button>,</button>
+        <button onclick="@(() => Evaluate())">=</button>
+    </div>
+</div>
+
+@code {
+    string _displayValue = "0";
+    double _currentValue = 0;
+    double _stored = 0;
+    
+    CalculatorOperator _op = CalculatorOperator.None;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentValue = 0;
+        UpdateDisplay();
+    }
+
+    private void InputNumber(int number)
+    {
+        _currentValue = _currentValue * 10 + number;
+        UpdateDisplay();
+    }
+
+    private void UpdateDisplay()
+    {
+        _displayValue = _currentValue.ToString(CultureInfo.CurrentCulture);
+        switch (_op)
+        {
+            case CalculatorOperator.None:
+                break;
+            case CalculatorOperator.Add:
+                _displayValue += " +";
+                break;
+            case CalculatorOperator.Subtract:
+                _displayValue += " -";
+                break;
+            case CalculatorOperator.Multiply:
+                _displayValue += " *";
+                break;
+            case CalculatorOperator.Divide:
+                _displayValue += " /";
+                break;
+        }
+    }
+
+    private void Clear()
+    {
+        _currentValue = 0;
+        _stored = 0;
+        _op = CalculatorOperator.None;
+        UpdateDisplay();
+    }
+    
+    enum CalculatorOperator
+    {
+        None,
+        Add,
+        Subtract,
+        Multiply,
+        Divide
+    }
+
+    private void ChangeOperator(CalculatorOperator newOperator)
+    {
+        // Evaluate current expression before switching operator
+        if (_stored != 0)
+        {
+            Evaluate();
+        }
+        _op = newOperator;
+        _stored = _currentValue;
+        _currentValue = 0;
+        UpdateDisplay();
+    }
+
+    private void Evaluate()
+    {
+        switch (_op)
+        {
+            case CalculatorOperator.None:
+                return;
+            case CalculatorOperator.Add:
+                _currentValue = _stored + _currentValue;
+                break;
+            case CalculatorOperator.Subtract:
+                _currentValue = _stored - _currentValue;
+                break;
+            case CalculatorOperator.Multiply:
+                _currentValue = _stored * _currentValue;
+                break;
+            case CalculatorOperator.Divide:
+                _currentValue = _stored / _currentValue;
+                break;
+        }
+
+        _stored = 0;
+        _op = CalculatorOperator.None;
+        UpdateDisplay();
+    }
+
+    private void SwapSign()
+    {
+        _currentValue *= -1;
+        UpdateDisplay();
+    }
+
+    private void InPercent()
+    {
+        _currentValue /= 100;
+        UpdateDisplay();
+    }
+
+}
