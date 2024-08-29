@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup .NET Core SDK 8.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Install Netlify CLI
+        run: npm install netlify-cli -g
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Run
+        run: cd PwaPlayground && dotnet public -c Release
+      - name: Deploy to netlify
+        run: cd PwaPlayground && netlify deploy --dir=bin/Release/net8.0/publish/wwwroot --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
