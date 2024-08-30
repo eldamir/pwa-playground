@@ -105,19 +105,6 @@ code {
     color: #c02d76;
 }
 
-.snake-squares .snake-row {
-    margin: 0;
-    padding: 0;
-}
-.snake-squares .snake-row .snake-cell {
-    width: 30px;
-    height: 30px;
-    background-color: #CCC;
-    padding: 0;
-    margin: 1px;
-    display: inline-block;
-}
-
 .calculator {
     display: flex;
     flex-direction: column;
